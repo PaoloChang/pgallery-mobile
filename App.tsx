@@ -4,7 +4,7 @@ import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import LoggedOutNav from "./navigators/LoggedOutNav";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, ThemeProvider } from "@react-navigation/native";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
