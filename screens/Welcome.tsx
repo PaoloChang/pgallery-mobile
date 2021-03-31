@@ -4,31 +4,8 @@ import styled from "styled-components/native";
 import colors from "../colors";
 import { Pacifico_400Regular, useFonts } from "@expo-google-fonts/dev";
 import AppLoading from "expo-app-loading";
-
-const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-`;
-
-const Logo = styled.Text`
-  max-width: 50%;
-  height: 15%;
-  color: white;
-  font-family: "Pacifico_400Regular";
-  font-size: 36px;
-`;
-
-const CreateAccount = styled.View`
-  background-color: ${colors.blue};
-  padding: 10px 10px;
-  border-radius: 5px;
-`;
-const CreateAccountText = styled.Text`
-  color: white;
-  font-weight: 700;
-`;
+import AuthLayout from "../components/auth/AuthLayout";
+import AuthButton from "../components/auth/AuthButton";
 
 const LoginLink = styled.Text`
   color: ${colors.blue};
@@ -53,18 +30,16 @@ export default function Welcome({ navigation }: any) {
   const goToLogIn = () => navigation.navigate("LogIn");
 
   return (
-    <Container>
-      <Logo>PGallery</Logo>
-      <TouchableOpacity onPress={goToCreateAccount}>
-        <CreateAccount>
-          <CreateAccountText>Create Account</CreateAccountText>
-        </CreateAccount>
-      </TouchableOpacity>
-
+    <AuthLayout>
+      <AuthButton
+        text="Create New Account"
+        onPress={goToCreateAccount}
+        disabled={false}
+      />
       <TouchableOpacity onPress={goToLogIn}>
-        <LoginLink>Login</LoginLink>
+        <LoginLink>Log In</LoginLink>
       </TouchableOpacity>
-    </Container>
+    </AuthLayout>
   );
 }
 
