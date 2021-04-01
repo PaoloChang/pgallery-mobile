@@ -1,8 +1,9 @@
 import styled from "styled-components/native";
 
-type TextInput = {
+interface TextInput {
   lastInput?: boolean;
-};
+  autoCapitalize?: string;
+}
 
 export const TextInput = styled.TextInput<TextInput>`
   width: 100%;
