@@ -1,54 +1,67 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
-import styled from "styled-components/native";
+import React, { useRef } from "react";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
-
-const Container = styled.View`
-  flex: 1;
-  background-color: black;
-`;
+import { TextInput } from "../components/auth/AuthShared";
 
 export default function CreateAccount() {
+  const lastNameRef = useRef(null);
+  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const onNextField = (nextElement: any) => {
+    nextElement?.current?.focus();
+  };
+
+  const onFinish = () => {
+    alert("done");
+  };
+
   return (
     <AuthLayout>
       <TextInput
+        autoFocus
         placeholder="First Name"
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(255,255,255,0.5)"
         returnKeyType="next"
-        style={{ backgroundColor: "white", width: "100%" }}
+        onSubmitEditing={() => onNextField(lastNameRef)}
       />
 
       <TextInput
+        ref={lastNameRef}
         placeholder="Last Name"
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(255,255,255,0.5)"
         returnKeyType="next"
-        style={{ backgroundColor: "white", width: "100%" }}
+        onSubmitEditing={() => onNextField(usernameRef)}
       />
 
       <TextInput
+        ref={usernameRef}
         placeholder="Username"
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(255,255,255,0.5)"
         returnKeyType="next"
-        style={{ backgroundColor: "white", width: "100%" }}
+        onSubmitEditing={() => onNextField(emailRef)}
       />
 
       <TextInput
+        ref={emailRef}
         placeholder="Email"
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(255,255,255,0.5)"
         keyboardType="email-address"
         returnKeyType="next"
-        style={{ backgroundColor: "white", width: "100%" }}
+        onSubmitEditing={() => onNextField(passwordRef)}
       />
 
       <TextInput
+        ref={passwordRef}
         placeholder="Password"
-        placeholderTextColor="gray"
+        placeholderTextColor="rgba(255,255,255,0.5)"
         secureTextEntry
         returnKeyType="done"
-        style={{ backgroundColor: "white", width: "100%" }}
+        lastInput={true}
+        onSubmitEditing={() => onFinish()}
       />
+
       <AuthButton text="Create Account" disabled={true} onPress={() => null} />
     </AuthLayout>
   );
