@@ -21,12 +21,17 @@ const Container = styled.View`
 
 const Logo = styled.Text`
   max-width: 50%;
+  min-width: 160px;
   margin-bottom: 20px;
   align-self: center;
   color: white;
   font-family: "Pacifico_400Regular";
   font-size: 36px;
 `;
+
+export const onNextField = (nextElement: any) => {
+  nextElement?.current?.focus();
+};
 
 export default function AuthLayout({ children }: any) {
   let [fontsLoaded] = useFonts({ Pacifico_400Regular });
@@ -37,7 +42,11 @@ export default function AuthLayout({ children }: any) {
   };
 
   return (
-    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={dismissKeyboard}>
+    <TouchableWithoutFeedback
+      style={{ flex: 1 }}
+      onPress={dismissKeyboard}
+      disabled={Platform.OS === "web"}
+    >
       <Container>
         <KeyboardAvoidingView
           behavior="padding"
