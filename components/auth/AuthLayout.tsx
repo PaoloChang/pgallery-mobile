@@ -1,15 +1,13 @@
 import React from "react";
+import AppLoading from "expo-app-loading";
+import { useFonts, Pacifico_400Regular } from "@expo-google-fonts/dev";
 import {
-  View,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import styled from "styled-components/native";
-import { Pacifico_400Regular, useFonts } from "@expo-google-fonts/dev";
-import AppLoading from "expo-app-loading";
 
 const Container = styled.View`
   flex: 1;
