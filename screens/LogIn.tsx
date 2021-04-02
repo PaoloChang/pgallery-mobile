@@ -9,8 +9,16 @@ export default function LogIn({ navigation }: any) {
   const passwordRef = useRef(null);
 
   useEffect(() => {
-    register("username");
-    register("password");
+    register("username", {
+      required: true,
+      minLength: {
+        value: 6,
+        message: "Username should be longer than 6 characters",
+      },
+    });
+    register("password", {
+      required: "Password is required",
+    });
   }, [register]);
 
   const onValid = (data: any) => {
@@ -40,6 +48,7 @@ export default function LogIn({ navigation }: any) {
       <AuthButton
         text="Create Account"
         disabled={true}
+        loading
         onPress={handleSubmit(onValid)}
       />
     </AuthLayout>
