@@ -12,19 +12,29 @@ export default function CreateAccount() {
   const passwordRef = useRef(null);
 
   useEffect(() => {
-    register("firstName");
-    register("lastName");
-    register("username");
-    register("email");
-    register("password");
+    register("firstName", {
+      required: true,
+    });
+    register("lastName", {
+      required: true,
+    });
+    register("username", {
+      required: true,
+      minLength: {
+        value: 6,
+        message: "Username should be longer than 6 characters",
+      },
+    });
+    register("email", {
+      required: true,
+    });
+    register("password", {
+      required: true,
+    });
   }, [register]);
 
   const onValid = (data: any) => {
     console.log(data);
-  };
-
-  const onFinish = () => {
-    alert("done");
   };
 
   return (
@@ -78,7 +88,12 @@ export default function CreateAccount() {
         onChangeText={(text) => setValue("password", text)}
       />
 
-      <AuthButton text="Create Account" disabled={true} onPress={() => null} />
+      <AuthButton
+        text="Create Account"
+        disabled={true}
+        loading
+        onPress={handleSubmit(onValid)}
+      />
     </AuthLayout>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import colors from "../../colors";
 
@@ -19,14 +20,20 @@ export default function AuthButton({
   onPress,
   disabled,
   text,
+  loading,
 }: {
   onPress: any;
   disabled: boolean;
   text: string;
+  loading: any;
 }) {
   return (
     <Button onPress={onPress} disabled={disabled}>
-      <ButtonText>{text}</ButtonText>
+      {loading ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <ButtonText>{text}</ButtonText>
+      )}
     </Button>
   );
 }
