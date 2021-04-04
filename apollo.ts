@@ -1,9 +1,10 @@
 import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client";
+import { SERVER_URI } from "@env";
 
 export const isLoggedInVar = makeVar(false);
 
 const client = new ApolloClient({
-  uri: "https://perfect-chicken-31.loca.lt/graphql",
+  uri: `${SERVER_URI}/graphql`,
   cache: new InMemoryCache(),
 });
 
