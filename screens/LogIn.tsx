@@ -1,12 +1,35 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { isLoggedInVar } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout, { onNextField } from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
 
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      status
+      token
+      error
+    }
+  }
+`;
+
 export default function LogIn({ navigation }: any) {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, watch } = useForm();
   const passwordRef = useRef(null);
+  const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted: (data) => {
+      console.log(data);
+      const {
+        login: { status, token },
+      } = data;
+      if (status) {
+        isLoggedInVar(true);
+      }
+    },
+  });
 
   useEffect(() => {
     register("username", {
@@ -23,6 +46,13 @@ export default function LogIn({ navigation }: any) {
 
   const onValid = (data: any) => {
     console.log(data);
+    if (!loading) {
+      logInMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
   };
 
   return (
@@ -46,9 +76,9 @@ export default function LogIn({ navigation }: any) {
         onChangeText={(text) => setValue("password", text)}
       />
       <AuthButton
-        text="Create Account"
-        disabled={true}
-        loading
+        text="Log In"
+        disabled={!watch("username") || !watch("password")}
+        loading={loading}
         onPress={handleSubmit(onValid)}
       />
     </AuthLayout>
