@@ -2,12 +2,16 @@
 
 ## UI
 
-- [x] Loading
-- [x] Welcome Screen
-- [x] Create Account Screen
-- [x] Login Screen
+- [x] Stack Navigator
+  - [x] Loading
+  - [x] Welcome Screen
+  - [x] Create Account Screen
+  - [x] Login Screen
+- [x] Tab Navigator
+  - [x] Dummy Feed
 
 ## Functions
 
-- [ ] Apollo Client
+- [x] Apollo Client
+  - [ ] Login Mutation
 - [x] Form Validation
