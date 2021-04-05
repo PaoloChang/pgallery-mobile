@@ -1,7 +1,7 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { isLoggedInVar } from "../apollo";
+import { isLoggedInVar, logUserIn } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout, { onNextField } from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
@@ -25,13 +25,14 @@ export default function LogIn({ route: { params } }: any) {
   });
   const passwordRef = useRef(null);
   const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       console.log(data);
       const {
         login: { status, token },
       } = data;
       if (status) {
-        isLoggedInVar(true);
+        // isLoggedInVar(true);
+        await logUserIn(token);
       }
     },
   });
