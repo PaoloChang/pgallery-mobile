@@ -35,6 +35,7 @@ export default function Welcome({ navigation }: any) {
       <AuthButton
         text="Create New Account"
         onPress={goToCreateAccount}
+        loading={false}
         disabled={false}
       />
       <TouchableOpacity onPress={goToLogIn}>

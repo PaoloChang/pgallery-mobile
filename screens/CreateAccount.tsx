@@ -1,11 +1,50 @@
 import React, { useEffect, useRef } from "react";
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout, { onNextField } from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
 
-export default function CreateAccount() {
-  const { register, handleSubmit, setValue } = useForm();
+const CREATE_ACCOUNT_MUTATION = gql`
+  mutation createAccount(
+    $firstName: String!
+    $lastName: String
+    $username: String!
+    $email: String!
+    $password: String!
+  ) {
+    createAccount(
+      firstName: $firstName
+      lastName: $lastName
+      username: $username
+      email: $email
+      password: $password
+    ) {
+      status
+      error
+    }
+  }
+`;
+
+export default function CreateAccount({ navigation }: any) {
+  const { register, handleSubmit, setValue, watch, getValues } = useForm();
+  const [createAccountMutation, { loading }] = useMutation(
+    CREATE_ACCOUNT_MUTATION,
+    {
+      onCompleted: (data) => {
+        const { username, password } = getValues();
+        const {
+          createAccount: { status },
+        } = data;
+        if (status) {
+          navigation.navigate("LogIn", {
+            username,
+            password,
+          });
+        }
+      },
+    }
+  );
   const lastNameRef = useRef(null);
   const usernameRef = useRef(null);
   const emailRef = useRef(null);
@@ -35,6 +74,13 @@ export default function CreateAccount() {
 
   const onValid = (data: any) => {
     console.log(data);
+    if (!loading) {
+      createAccountMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
   };
 
   return (
@@ -90,8 +136,13 @@ export default function CreateAccount() {
 
       <AuthButton
         text="Create Account"
-        disabled={true}
-        loading
+        disabled={
+          !watch("firstName") ||
+          !watch("email") ||
+          !watch("username") ||
+          !watch("password")
+        }
+        loading={loading}
         onPress={handleSubmit(onValid)}
       />
     </AuthLayout>

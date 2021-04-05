@@ -13,5 +13,6 @@
 ## Functions
 
 - [x] Apollo Client
-  - [ ] Login Mutation
+  - [x] Login Mutation
+  - [x] Create Account Mutation
 - [x] Form Validation
