@@ -1,8 +1,7 @@
-import { StackScreenProps } from "@react-navigation/stack";
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const Search: React.FC = ({ navigation }: any) => {
+const Photo = ({ navigation }: any) => {
   return (
     <View
       style={{
@@ -12,11 +11,11 @@ const Search: React.FC = ({ navigation }: any) => {
         justifyContent: "center",
       }}
     >
-      <TouchableOpacity onPress={() => navigation.navigate("Photo")}>
-        <Text style={{ color: "white" }}>Photo</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+        <Text style={{ color: "white" }}>Gallery</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Search;
+export default Photo;

@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 
-const Feed = () => {
+const Feed = ({ navigation }: any) => {
   return (
     <View
       style={{
@@ -11,7 +11,9 @@ const Feed = () => {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>Hello</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Photo")}>
+        <Text style={{ color: "white" }}>Photo</Text>
+      </TouchableOpacity>
     </View>
   );
 };
