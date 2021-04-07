@@ -9,6 +9,10 @@
   - [x] Login Screen
 - [x] Tab Navigator
   - [x] Dummy Feed
+  - [x] Dummy Search
+  - [x] Dummy Camera
+  - [x] Dummy Notification
+  - [x] Dummy Profile
 
 ## Functions
 
