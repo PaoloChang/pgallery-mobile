@@ -1,4 +1,6 @@
 import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import colors from "../colors";
@@ -14,21 +16,22 @@ const LoginLink = styled.Text`
   margin-top: 30px;
 `;
 
-type WelcomeProps = {
-  navigation: {
-    navigate: Function;
-  };
+type CreateAccountScreenNavigationProp = StackNavigationProp<
+  LoggedOutStackParamList,
+  "Welcome"
+>;
+
+type Props = {
+  navigation: CreateAccountScreenNavigationProp;
 };
 
-export default function Welcome({ navigation }: any) {
-  // const Welcome: React.FC<WelcomeProps> = ({ navigation }) => {
-
+const Welcome: React.FC<Props> = ({ navigation }) => {
   let [fontsLoaded] = useFonts({ Pacifico_400Regular });
 
   if (!fontsLoaded) return <AppLoading />;
 
   const goToCreateAccount = () => navigation.navigate("CreateAccount");
-  const goToLogIn = () => navigation.navigate("LogIn");
+  const goToLogIn = () => navigation.navigate("LogIn", {});
 
   return (
     <AuthLayout>
@@ -43,6 +46,6 @@ export default function Welcome({ navigation }: any) {
       </TouchableOpacity>
     </AuthLayout>
   );
-}
+};
 
-// export default Welcome;
+export default Welcome;
