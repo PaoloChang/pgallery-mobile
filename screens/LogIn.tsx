@@ -1,12 +1,12 @@
-import { gql, useMutation } from "@apollo/client";
-import { RouteProp } from "@react-navigation/core";
 import React, { useEffect, useRef } from "react";
+import { RouteProp } from "@react-navigation/core";
+import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { isLoggedInVar, logUserIn } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout, { onNextField } from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
-import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
 
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
