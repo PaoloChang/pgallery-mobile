@@ -1,12 +1,16 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Welcome from "../screens/Welcome";
 import LogIn from "../screens/LogIn";
 import CreateAccount from "../screens/CreateAccount";
-import { withTheme } from "styled-components";
 
 const Stack = createStackNavigator();
+
+export type LoggedOutStackParamList = {
+  Welcome: undefined;
+  LogIn: { username?: string; password?: string };
+  CreateAccount: undefined;
+};
 
 export default function LoggedOutNav() {
   return (

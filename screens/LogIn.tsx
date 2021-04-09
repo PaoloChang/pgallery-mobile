@@ -1,5 +1,7 @@
-import { gql, useMutation } from "@apollo/client";
 import React, { useEffect, useRef } from "react";
+import { RouteProp } from "@react-navigation/core";
+import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
+import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { isLoggedInVar, logUserIn } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
@@ -16,7 +18,13 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function LogIn({ route: { params } }: any) {
+type LogInScreenRouteProp = RouteProp<LoggedOutStackParamList, "LogIn">;
+
+type Props = {
+  route: LogInScreenRouteProp;
+};
+
+export default function LogIn({ route: { params } }: Props) {
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       username: params?.username,

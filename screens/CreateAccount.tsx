@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout, { onNextField } from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { LoggedOutStackParamList } from "../navigators/LoggedOutNav";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
@@ -26,7 +28,16 @@ const CREATE_ACCOUNT_MUTATION = gql`
   }
 `;
 
-export default function CreateAccount({ navigation }: any) {
+type CreateAccountScreenNavigationProp = StackNavigationProp<
+  LoggedOutStackParamList,
+  "CreateAccount"
+>;
+
+type Props = {
+  navigation: CreateAccountScreenNavigationProp;
+};
+
+export default function CreateAccount({ navigation }: Props) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm();
   const [createAccountMutation, { loading }] = useMutation(
     CREATE_ACCOUNT_MUTATION,
