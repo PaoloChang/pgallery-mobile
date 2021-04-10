@@ -1,6 +1,4 @@
 import React from "react";
-import AppLoading from "expo-app-loading";
-import { useFonts, Pacifico_400Regular } from "@expo-google-fonts/dev";
 import {
   TouchableWithoutFeedback,
   Keyboard,
@@ -8,6 +6,7 @@ import {
   Platform,
 } from "react-native";
 import styled from "styled-components/native";
+import Logo, { Size } from "../Logo";
 
 const Container = styled.View`
   flex: 1;
@@ -17,24 +16,11 @@ const Container = styled.View`
   padding: 0 40px;
 `;
 
-const Logo = styled.Text`
-  max-width: 50%;
-  min-width: 160px;
-  margin-bottom: 20px;
-  align-self: center;
-  color: white;
-  font-family: "Pacifico_400Regular";
-  font-size: 36px;
-`;
-
 export const onNextField = (nextElement: any) => {
   nextElement?.current?.focus();
 };
 
 export default function AuthLayout({ children }: any) {
-  let [fontsLoaded] = useFonts({ Pacifico_400Regular });
-  if (!fontsLoaded) return <AppLoading />;
-
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
@@ -53,7 +39,7 @@ export default function AuthLayout({ children }: any) {
             width: "100%",
           }}
         >
-          <Logo>PGallery</Logo>
+          <Logo size={Size.WELCOME}>PGallery</Logo>
           {children}
         </KeyboardAvoidingView>
       </Container>
