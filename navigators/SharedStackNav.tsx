@@ -6,6 +6,7 @@ import Feed from "../screens/Feed";
 import Search from "../screens/Search";
 import Notification from "../screens/Notifications";
 import Gallery from "../screens/Gallery";
+import Logo, { Size } from "../components/Logo";
 
 const Stack = createStackNavigator();
 
@@ -16,17 +17,25 @@ interface IStackNavFactory {
 export default function StackNavFactory({ screenName }: IStackNavFactory) {
   return (
     <Stack.Navigator
+      headerMode="screen"
       screenOptions={{
         headerBackTitleVisible: false,
         headerTintColor: "white",
         headerStyle: {
           shadowColor: "rgba(255,255,255,0.3)",
           backgroundColor: "black",
+          height: 103,
         },
       }}
     >
       {screenName === "Feed" ? (
-        <Stack.Screen name={"Feed"} component={Feed} />
+        <Stack.Screen
+          name={"Feed"}
+          component={Feed}
+          options={{
+            headerTitle: () => <Logo size={Size.HEADER} />,
+          }}
+        />
       ) : null}
       {screenName === "Search" ? (
         <Stack.Screen name={"Search"} component={Search} />
