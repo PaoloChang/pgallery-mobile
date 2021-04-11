@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const Camera = ({ navigation }: any) => {
+const Photo = ({ navigation }: any) => {
   return (
     <View
       style={{
@@ -12,10 +12,10 @@ const Camera = ({ navigation }: any) => {
       }}
     >
       <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
-        <Text style={{ color: "white" }}>Gallery</Text>
+        <Text style={{ color: "white" }}>Photo</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default Camera;
+export default Photo;
