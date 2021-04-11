@@ -99,9 +99,14 @@ const Post: React.FC<ISingle> = ({
               size={25}
             />
           </Action>
-          <Action>
-            <Ionicons name={`chatbubble-outline`} color={"white"} size={22} />
-          </Action>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Comments")}
+            hitSlop={{ top: 30, bottom: 20, left: 20, right: 20 }}
+          >
+            <Action>
+              <Ionicons name={`chatbubble-outline`} color={"white"} size={25} />
+            </Action>
+          </TouchableOpacity>
         </Actions>
         <TouchableOpacity onPress={() => navigation.navigate("Likes")}>
           <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>

@@ -8,6 +8,7 @@ import Search from "../screens/Search";
 import Notification from "../screens/Notifications";
 import Gallery from "../screens/Gallery";
 import Likes from "../screens/Likes";
+import Comments from "../screens/Comments";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ export default function StackNavFactory({ screenName }: IStackNavFactory) {
       <Stack.Screen name="Gallery" component={Gallery} />
       <Stack.Screen name="Photo" component={Photo} />
       <Stack.Screen name="Likes" component={Likes} />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 }
