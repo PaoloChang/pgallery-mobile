@@ -1,7 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import ScreenLayout from "../components/ScreenLayout";
+import { gql, useQuery } from "@apollo/client";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
+import { FlatList } from "react-native";
+import Single from "../components/Single";
 
 const FEED_QUERY = gql`
   query seeFeeds {
@@ -23,23 +25,42 @@ const FEED_QUERY = gql`
   ${COMMENT_FRAGMENT}
 `;
 
+interface IPhoto {
+  caption: string;
+  commentNumber: number;
+  comments: {
+    createdAt: string;
+    payload: string;
+  }[];
+  createdAt: string;
+  id: number;
+  image: string;
+  isLiked: boolean;
+  isMine: boolean;
+  likes: number;
+  user: {
+    username: string;
+    avatar: string;
+  };
+}
+
 const Feed = ({ navigation }: any) => {
-  const { data } = useQuery(FEED_QUERY);
+  const { data, loading } = useQuery(FEED_QUERY);
   console.log(data);
 
+  const renderPhoto = ({ item: photo }: { item: IPhoto }) => {
+    return <Single {...photo} />;
+  };
+
   return (
-    <View
-      style={{
-        backgroundColor: "black",
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <TouchableOpacity onPress={() => navigation.navigate("Photo")}>
-        <Text style={{ color: "white" }}>Photo</Text>
-      </TouchableOpacity>
-    </View>
+    <ScreenLayout loading={loading}>
+      <FlatList
+        style={{ width: "100%" }}
+        data={data?.seeFeeds}
+        keyExtractor={(photo) => photo.id.toString()}
+        renderItem={renderPhoto}
+      />
+    </ScreenLayout>
   );
 };
 
