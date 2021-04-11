@@ -3,7 +3,7 @@ import ScreenLayout from "../components/ScreenLayout";
 import { gql, useQuery } from "@apollo/client";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 import { FlatList } from "react-native";
-import Single from "../components/Single";
+import Post from "../components/Post";
 
 const FEED_QUERY = gql`
   query seeFeeds {
@@ -49,7 +49,7 @@ const Feed = ({ navigation }: any) => {
   console.log(data);
 
   const renderPhoto = ({ item: photo }: { item: IPhoto }) => {
-    return <Single {...photo} />;
+    return <Post {...photo} />;
   };
 
   return (
