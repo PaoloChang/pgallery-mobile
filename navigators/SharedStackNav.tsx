@@ -1,12 +1,13 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import Logo, { Size } from "../components/Logo";
 import Photo from "../screens/Photo";
 import Profile from "../screens/Profile";
 import Feed from "../screens/Feed";
 import Search from "../screens/Search";
 import Notification from "../screens/Notifications";
 import Gallery from "../screens/Gallery";
-import Logo, { Size } from "../components/Logo";
+import Likes from "../screens/Likes";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,7 @@ export default function StackNavFactory({ screenName }: IStackNavFactory) {
       ) : null}
       <Stack.Screen name="Gallery" component={Gallery} />
       <Stack.Screen name="Photo" component={Photo} />
+      <Stack.Screen name="Likes" component={Likes} />
     </Stack.Navigator>
   );
 }

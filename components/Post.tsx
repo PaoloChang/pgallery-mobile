@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useWindowDimensions, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 
 const Container = styled.View``;
@@ -27,8 +28,13 @@ const SImage = styled.Image``;
 const Descriptions = styled.View`
   padding: 10px;
 `;
-const Actions = styled.View``;
-const Action = styled.TouchableOpacity``;
+const Actions = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+const Action = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
 const Likes = styled.Text`
   color: white;
   font-weight: 600;
@@ -86,10 +92,20 @@ const Post: React.FC<ISingle> = ({
       />
       <Descriptions>
         <Actions>
-          <Action />
-          <Action />
+          <Action>
+            <Ionicons
+              name={isLiked ? "heart" : "heart-outline"}
+              color={isLiked ? "tomato" : "white"}
+              size={25}
+            />
+          </Action>
+          <Action>
+            <Ionicons name={`chatbubble-outline`} color={"white"} size={22} />
+          </Action>
         </Actions>
-        <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
+        <TouchableOpacity onPress={() => navigation.navigate("Likes")}>
+          <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
+        </TouchableOpacity>
         <Caption>
           <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
             <Username>{user.username}</Username>
