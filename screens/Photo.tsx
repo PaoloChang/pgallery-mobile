@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const Photo = ({ navigation }: any) => {
+const Camera = ({ navigation }: any) => {
   return (
     <View
       style={{
@@ -18,4 +18,4 @@ const Photo = ({ navigation }: any) => {
   );
 };
 
-export default Photo;
+export default Camera;
