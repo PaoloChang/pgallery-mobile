@@ -21,14 +21,23 @@ const Username = styled.Text`
   font-size: 18px;
   font-weight: 600;
   color: white;
+  margin-right: 5px;
 `;
 const SImage = styled.Image``;
+const Descriptions = styled.View`
+  padding: 10px;
+`;
 const Actions = styled.View``;
 const Action = styled.TouchableOpacity``;
 const Likes = styled.Text`
   color: white;
+  font-weight: 600;
+  margin: 5px 0px;
 `;
-const Caption = styled.View``;
+const Caption = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 const CaptionText = styled.Text`
   color: white;
 `;
@@ -45,11 +54,7 @@ interface ISingle {
   likes: number;
 }
 
-type Props = {
-  onPress(): void;
-};
-
-const Single: React.FC<ISingle> = ({
+const Post: React.FC<ISingle> = ({
   id,
   user,
   caption,
@@ -79,19 +84,21 @@ const Single: React.FC<ISingle> = ({
         style={{ width: windowWidth, height: imageHeight }}
         source={{ uri: image }}
       />
-      <Actions>
-        <Action />
-        <Action />
-      </Actions>
-      <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
-      <Caption>
-        <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
-          <Username>{user.username}</Username>
-        </TouchableOpacity>
-        <CaptionText>{caption}</CaptionText>
-      </Caption>
+      <Descriptions>
+        <Actions>
+          <Action />
+          <Action />
+        </Actions>
+        <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
+        <Caption>
+          <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+            <Username>{user.username}</Username>
+          </TouchableOpacity>
+          <CaptionText>{caption}</CaptionText>
+        </Caption>
+      </Descriptions>
     </Container>
   );
 };
 
-export default Single;
+export default Post;
