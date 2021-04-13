@@ -44,7 +44,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          seeFeeds: {
+          seeFeed: {
             keyArgs: false,
             merge(existing = [], incoming = []) {
               return [...existing, ...incoming];

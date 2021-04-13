@@ -6,8 +6,8 @@ import { FlatList } from "react-native";
 import Post from "../components/Post";
 
 const FEED_QUERY = gql`
-  query seeFeeds($offset: Int) {
-    seeFeeds(offset: $offset) {
+  query seeFeed($offset: Int) {
+    seeFeed(offset: $offset) {
       ...PhotoFragment
       user {
         username
@@ -45,7 +45,7 @@ interface IPhoto {
 }
 
 interface ISeeFeed {
-  seeFeeds: IPhoto[];
+  seeFeed: IPhoto[];
 }
 
 const Feed = ({ navigation }: any) => {
@@ -73,14 +73,14 @@ const Feed = ({ navigation }: any) => {
         onEndReached={() =>
           fetchMore({
             variables: {
-              offset: data?.seeFeeds.length,
+              offset: data?.seeFeed.length,
             },
           })
         }
         refreshing={refreshing}
         onRefresh={refresh}
         style={{ width: "100%" }}
-        data={data?.seeFeeds}
+        data={data?.seeFeed}
         keyExtractor={(photo, index) => photo.id.toString()}
         renderItem={renderPhoto}
       />
