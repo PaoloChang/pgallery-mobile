@@ -69,11 +69,11 @@ const Feed = ({ navigation }: any) => {
   return (
     <ScreenLayout loading={loading}>
       <FlatList
-        onEndReachedThreshold={0.18}
+        onEndReachedThreshold={0.05}
         onEndReached={() =>
           fetchMore({
             variables: {
-              offset: data?.seeFeed.length,
+              offset: data?.seeFeed?.length,
             },
           })
         }
@@ -81,7 +81,7 @@ const Feed = ({ navigation }: any) => {
         onRefresh={refresh}
         style={{ width: "100%" }}
         data={data?.seeFeed}
-        keyExtractor={(photo, index) => photo.id.toString()}
+        keyExtractor={(photo, index) => index.toString()}
         renderItem={renderPhoto}
       />
     </ScreenLayout>
