@@ -13,9 +13,9 @@ const Header = styled.View`
   height: 54px;
 `;
 const UserAvatar = styled.Image`
-  width: 40;
-  height: 40;
-  border-radius: 20;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
   margin-right: 15px;
 `;
 const Username = styled.Text`
@@ -71,6 +71,7 @@ const Post: React.FC<ISingle> = ({
   const navigation = useNavigation();
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const [imageHeight, setImageHeight] = useState(windowHeight - 450);
+
   useEffect(() => {
     Image.getSize(image, (width, height) => {
       setImageHeight(height / (width / windowWidth));

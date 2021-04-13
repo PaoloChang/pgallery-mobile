@@ -12,11 +12,11 @@ import Comments from "../screens/Comments";
 
 const Stack = createStackNavigator();
 
-interface IStackNavFactory {
+interface ISharedStackNav {
   screenName: string;
 }
 
-export default function StackNavFactory({ screenName }: IStackNavFactory) {
+export default function SharedStackNav({ screenName }: ISharedStackNav) {
   return (
     <Stack.Navigator
       headerMode="screen"
