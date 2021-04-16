@@ -3,6 +3,7 @@ import { useWindowDimensions, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
+import { gql, useMutation } from "@apollo/client";
 
 const Container = styled.View``;
 const Header = styled.View`
@@ -48,6 +49,15 @@ const CaptionText = styled.Text`
   color: white;
 `;
 
+const TOGGLE_LIKE_MUTATION = gql`
+  mutation toggleLike($id: Int!) {
+    toggleLike(id: $id) {
+      status
+      error
+    }
+  }
+`;
+
 interface Props {
   id: number;
   user: {
@@ -78,9 +88,47 @@ const Post: React.FC<Props> = ({
     });
   }, [image]);
 
+  const updateToggleLike = (cache: any, result: any) => {
+    const {
+      data: {
+        toggleLike: { status },
+      },
+    } = result;
+
+    if (status) {
+      const photoId = `Photo:${id}`;
+
+      cache.modify({
+        id: photoId,
+        fields: {
+          isLiked(prev: boolean) {
+            return !prev;
+          },
+          likes(prev: number) {
+            if (isLiked) {
+              return prev - 1;
+            }
+            return prev + 1;
+          },
+        },
+      });
+    }
+  };
+
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE_MUTATION, {
+    variables: {
+      id,
+    },
+    update: updateToggleLike,
+  });
+
+  const goToGallery = () => {
+    navigation.navigate("Gallery", { id, username: user.username });
+  };
+
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+      <TouchableOpacity onPress={goToGallery}>
         <Header>
           <UserAvatar resizeMode="cover" source={{ uri: user.avatar }} />
           <Username>{user.username}</Username>
@@ -93,7 +141,7 @@ const Post: React.FC<Props> = ({
       />
       <Descriptions>
         <Actions>
-          <Action>
+          <Action onPress={() => toggleLikeMutation()}>
             <Ionicons
               name={isLiked ? "heart" : "heart-outline"}
               color={isLiked ? "tomato" : "white"}
@@ -115,11 +163,7 @@ const Post: React.FC<Props> = ({
           <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
         </TouchableOpacity>
         <Caption>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Gallery", { id, username: user.username })
-            }
-          >
+          <TouchableOpacity onPress={goToGallery}>
             <Username>{user.username}</Username>
           </TouchableOpacity>
           <CaptionText>{caption}</CaptionText>
