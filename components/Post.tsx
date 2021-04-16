@@ -48,7 +48,7 @@ const CaptionText = styled.Text`
   color: white;
 `;
 
-interface ISingle {
+interface Props {
   id: number;
   user: {
     avatar: string;
@@ -60,7 +60,7 @@ interface ISingle {
   likes: number;
 }
 
-const Post: React.FC<ISingle> = ({
+const Post: React.FC<Props> = ({
   id,
   user,
   caption,
@@ -109,11 +109,17 @@ const Post: React.FC<ISingle> = ({
             </Action>
           </TouchableOpacity>
         </Actions>
-        <TouchableOpacity onPress={() => navigation.navigate("Likes")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Likes", { photoId: id })}
+        >
           <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
         </TouchableOpacity>
         <Caption>
-          <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Gallery", { id, username: user.username })
+            }
+          >
             <Username>{user.username}</Username>
           </TouchableOpacity>
           <CaptionText>{caption}</CaptionText>

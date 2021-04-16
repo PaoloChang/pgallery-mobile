@@ -26,7 +26,7 @@ export const logOutUser = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: `https://tame-pig-11.loca.lt/graphql`,
+  uri: `https://friendly-treefrog-16.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
