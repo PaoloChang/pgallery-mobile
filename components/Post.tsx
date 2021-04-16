@@ -58,7 +58,7 @@ const TOGGLE_LIKE_MUTATION = gql`
   }
 `;
 
-interface ISingle {
+interface Props {
   id: number;
   user: {
     avatar: string;
@@ -70,7 +70,7 @@ interface ISingle {
   likes: number;
 }
 
-const Post: React.FC<ISingle> = ({
+const Post: React.FC<Props> = ({
   id,
   user,
   caption,
@@ -122,9 +122,13 @@ const Post: React.FC<ISingle> = ({
     update: updateToggleLike,
   });
 
+  const goToGallery = () => {
+    navigation.navigate("Gallery", { id, username: user.username });
+  };
+
   return (
     <Container>
-      <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+      <TouchableOpacity onPress={goToGallery}>
         <Header>
           <UserAvatar resizeMode="cover" source={{ uri: user.avatar }} />
           <Username>{user.username}</Username>
@@ -153,11 +157,13 @@ const Post: React.FC<ISingle> = ({
             </Action>
           </TouchableOpacity>
         </Actions>
-        <TouchableOpacity onPress={() => navigation.navigate("Likes")}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Likes", { photoId: id })}
+        >
           <Likes>{likes === 1 ? "1 like" : `${likes} likes`}</Likes>
         </TouchableOpacity>
         <Caption>
-          <TouchableOpacity onPress={() => navigation.navigate("Gallery")}>
+          <TouchableOpacity onPress={goToGallery}>
             <Username>{user.username}</Username>
           </TouchableOpacity>
           <CaptionText>{caption}</CaptionText>

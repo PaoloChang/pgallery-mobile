@@ -12,6 +12,12 @@ import Comments from "../screens/Comments";
 
 const Stack = createStackNavigator();
 
+export type SharedStackParamList = {
+  Gallery: { id: number; username: string };
+  Profile: undefined;
+  Likes: { photoId: number };
+};
+
 interface ISharedStackNav {
   screenName: string;
 }
