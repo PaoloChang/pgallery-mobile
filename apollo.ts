@@ -5,8 +5,8 @@ import {
   makeVar,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { offsetLimitPagination } from "@apollo/client/utilities";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CachePersistor } from "apollo3-cache-persist";
 
 export const isLoggedInVar = makeVar<boolean>(false);
 export const tokenVar = makeVar<string | null>(null);
@@ -26,7 +26,7 @@ export const logOutUser = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: `https://tame-pig-11.loca.lt/graphql`,
+  uri: `https://smooth-bulldog-92.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -38,22 +38,24 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          seeFeed: {
-            keyArgs: false,
-            merge(existing = [], incoming = []) {
-              return [...existing, ...incoming];
-            },
+export const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        seeFeed: {
+          keyArgs: false,
+          merge(existing = [], incoming = []) {
+            return [...existing, ...incoming];
           },
         },
       },
     },
-  }),
+  },
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache,
 });
 
 export default client;
