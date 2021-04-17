@@ -6,6 +6,7 @@ import {
   Platform,
 } from "react-native";
 import styled from "styled-components/native";
+import DismissKeyboard from "../DismissKeyboard";
 import Logo, { Size } from "../Logo";
 
 const Container = styled.View`
@@ -21,16 +22,8 @@ export const onNextField = (nextElement: any) => {
 };
 
 export default function AuthLayout({ children }: any) {
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
-  };
-
   return (
-    <TouchableWithoutFeedback
-      style={{ flex: 1 }}
-      onPress={dismissKeyboard}
-      disabled={Platform.OS === "web"}
-    >
+    <DismissKeyboard>
       <Container>
         <KeyboardAvoidingView
           behavior="padding"
@@ -43,6 +36,6 @@ export default function AuthLayout({ children }: any) {
           {children}
         </KeyboardAvoidingView>
       </Container>
-    </TouchableWithoutFeedback>
+    </DismissKeyboard>
   );
 }

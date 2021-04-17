@@ -19,12 +19,12 @@ interface Props {
 }
 
 const Profile: React.FC<Props> = ({ navigation }) => {
-  const { data } = useUser();
+  // const { data } = useUser();
 
   useEffect(() => {
-    navigation.setOptions({
-      title: data?.seeMe.username,
-    });
+    // navigation.setOptions({
+    //   title: data?.seeMe.username,
+    // });
   }, []);
 
   return (

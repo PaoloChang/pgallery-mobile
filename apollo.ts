@@ -26,7 +26,7 @@ export const logOutUser = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: `https://friendly-treefrog-16.loca.lt/graphql`,
+  uri: `https://spotty-mule-21.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
