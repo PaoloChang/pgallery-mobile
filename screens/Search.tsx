@@ -39,7 +39,7 @@ const SEARCH_PHOTOS_QUERY = gql`
     }
   }
 `;
-// "id":8,"image":"https://ptgallery-uploads.s3.us-east-2.amazonaws.com/galleries/1-1616807129056-SlidingDenTable.jpg"
+
 interface IPhoto {
   id: number;
   image: string;
