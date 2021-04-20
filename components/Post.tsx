@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useWindowDimensions, Image, TouchableOpacity } from "react-native";
+import {
+  useWindowDimensions,
+  Image,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
@@ -68,6 +74,7 @@ interface Props {
   image: string;
   isLiked: boolean;
   likes: number;
+  fullView: boolean;
 }
 
 const Post: React.FC<Props> = ({
@@ -77,6 +84,7 @@ const Post: React.FC<Props> = ({
   image,
   isLiked,
   likes,
+  fullView,
 }) => {
   const navigation = useNavigation();
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
@@ -169,6 +177,15 @@ const Post: React.FC<Props> = ({
           <CaptionText>{caption}</CaptionText>
         </Caption>
       </Descriptions>
+      {fullView ? (
+        <View>
+          <Text style={{ color: "white" }}>Show all comments here</Text>
+        </View>
+      ) : (
+        <View>
+          <Text style={{ color: "white" }}>Show recent comments</Text>
+        </View>
+      )}
     </Container>
   );
 };

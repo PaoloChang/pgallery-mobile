@@ -64,7 +64,7 @@ const Feed = ({ navigation }: any) => {
   };
 
   const renderPhoto = ({ item: photo }: { item: IPhoto }) => {
-    return <Post {...photo} />;
+    return <Post {...photo} fullView={false} />;
   };
 
   return (
