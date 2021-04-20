@@ -18,7 +18,7 @@ const SearchBar = styled.TextInput<ISearchBar>`
   background-color: rgba(255, 255, 255, 1);
   padding: 7px 10px;
   border-radius: 7px;
-  width: ${(props) => props.width / 1.5};
+  width: ${(props) => props.width / 1.5 + "px"};
 `;
 const MessageContainer = styled.View`
   justify-content: center;
@@ -72,17 +72,9 @@ const Search: React.FC<Props> = ({ navigation }) => {
   const [
     startQueryFunc,
     { loading, data, called },
-  ] = useLazyQuery<ISearchPhotos>(SEARCH_PHOTOS_QUERY, {
-    onCompleted: (data) => {
-      console.log(`Search / onCompleted / data: ${JSON.stringify(data)}`);
-    },
-    onError: (e) => {
-      console.log(`Search / onError / e: ${e}`);
-    },
-  });
+  ] = useLazyQuery<ISearchPhotos>(SEARCH_PHOTOS_QUERY);
 
   const onValid = (data: any) => {
-    console.log(`Search / onValid / data: ${JSON.stringify(data)}`);
     startQueryFunc({
       variables: {
         ...data,
