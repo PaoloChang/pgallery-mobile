@@ -18,6 +18,7 @@ const Header = styled.View`
   align-items: center;
   padding: 10px;
   height: 54px;
+  margin-bottom: 5px;
 `;
 const UserAvatar = styled.Image`
   width: 40px;
@@ -54,6 +55,10 @@ const Caption = styled.View`
 const CaptionText = styled.Text`
   color: white;
 `;
+const CommentLine = styled.View`
+  padding-left: 10px;
+  padding-bottom: 10px;
+`;
 
 const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -74,6 +79,7 @@ interface Props {
   image: string;
   isLiked: boolean;
   likes: number;
+  commentNumber: number;
   fullView: boolean;
 }
 
@@ -84,6 +90,7 @@ const Post: React.FC<Props> = ({
   image,
   isLiked,
   likes,
+  commentNumber,
   fullView,
 }) => {
   const navigation = useNavigation();
@@ -156,14 +163,12 @@ const Post: React.FC<Props> = ({
               size={25}
             />
           </Action>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Comments")}
-            hitSlop={{ top: 30, bottom: 20, left: 20, right: 20 }}
+          <Action
+            onPress={() => navigation.navigate("Comments", { photoId: id })}
+            hitSlop={{ top: 30, bottom: 30, left: 20, right: 30 }}
           >
-            <Action>
-              <Ionicons name={`chatbubble-outline`} color={"white"} size={25} />
-            </Action>
-          </TouchableOpacity>
+            <Ionicons name={`chatbubble-outline`} color={"white"} size={25} />
+          </Action>
         </Actions>
         <TouchableOpacity
           onPress={() => navigation.navigate("Likes", { photoId: id })}
@@ -181,11 +186,17 @@ const Post: React.FC<Props> = ({
         <View>
           <Text style={{ color: "white" }}>Show all comments here</Text>
         </View>
-      ) : (
-        <View>
-          <Text style={{ color: "white" }}>Show recent comments</Text>
-        </View>
-      )}
+      ) : commentNumber > 0 ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Comments", { photoId: id })}
+        >
+          <CommentLine>
+            <Text style={{ color: "white" }}>
+              View all {commentNumber} comments
+            </Text>
+          </CommentLine>
+        </TouchableOpacity>
+      ) : null}
     </Container>
   );
 };
