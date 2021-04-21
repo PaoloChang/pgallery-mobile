@@ -6,13 +6,13 @@ import {
   useWindowDimensions,
   FlatList,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { SharedStackParamList } from "../navigators/SharedStackNav";
 import styled from "styled-components/native";
 import DismissKeyboard from "../components/DismissKeyboard";
 import { useForm } from "react-hook-form";
 import { gql, useLazyQuery } from "@apollo/client";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const SearchBar = styled.TextInput<ISearchBar>`
   background-color: rgba(255, 255, 255, 1);
@@ -84,6 +84,7 @@ const Search: React.FC<Props> = ({ navigation }) => {
 
   const SearchBox = () => (
     <SearchBar
+      clearButtonMode="always"
       width={width}
       placeholderTextColor="rgba(0,0,0,0.8)"
       placeholder="Search photos"

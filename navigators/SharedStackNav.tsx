@@ -16,8 +16,9 @@ export type SharedStackParamList = {
   Search: undefined;
   Gallery: { id: number; username: string };
   Photo: { photoId: number };
-  Profile: undefined;
   Likes: { photoId: number };
+  Comments: { photoId: number };
+  Profile: undefined;
 };
 
 interface ISharedStackNav {

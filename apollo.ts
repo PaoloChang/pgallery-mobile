@@ -26,7 +26,7 @@ export const logOutUser = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: `https://foolish-mouse-52.loca.lt/graphql`,
+  uri: `https://empty-emu-99.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
