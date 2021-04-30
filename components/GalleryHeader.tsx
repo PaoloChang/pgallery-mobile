@@ -7,29 +7,37 @@ const Container = styled.View``;
 const UpperView = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  padding: 10px;
 `;
-const Followers = styled.Text`
+const Avatar = styled.Image`
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  margin-right: 150px;
+`;
+const LabelWrapper = styled.View`
+  flex-direction: column;
+  align-items: center;
+`;
+const Indicator = styled.Text`
+  font-size: 20px;
   color: white;
 `;
-const Following = styled.Text`
+const Label = styled.Text`
+  font-size: 16px;
   color: white;
 `;
 const UnderView = styled.View`
   display: flex;
   flex-direction: column;
+  padding: 10px;
 `;
 const Biography = styled.Text`
   color: white;
 `;
 const Buttons = styled.View`
   flex-direction: row;
-`;
-const Avatar = styled.Image`
-  margin-left: 10px;
-  height: 60px;
-  width: 60px;
-  border-radius: 30px;
-  margin-right: 150px;
 `;
 const Username = styled.Text`
   color: white;
@@ -60,8 +68,14 @@ const GalleryHeader: React.FC<Props> = ({
     <Container>
       <UpperView>
         <Avatar source={{ uri: avatar }} />
-        <Followers>{totalFollowers}</Followers>
-        <Following>{totalFollowing}</Following>
+        <LabelWrapper>
+          <Indicator>{totalFollowers}</Indicator>
+          <Label>Followers</Label>
+        </LabelWrapper>
+        <LabelWrapper>
+          <Indicator>{totalFollowing}</Indicator>
+          <Label>Following</Label>
+        </LabelWrapper>
       </UpperView>
       <UnderView>
         <Biography>{bio}</Biography>

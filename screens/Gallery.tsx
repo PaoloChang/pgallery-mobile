@@ -88,10 +88,6 @@ const Gallery: React.FC<Props> = ({ navigation, route: { params } }) => {
     variables: {
       username: params.username,
     },
-    onCompleted: (data) => {
-      console.log("onCompleted");
-      console.log(data);
-    },
   });
 
   useEffect(() => {
