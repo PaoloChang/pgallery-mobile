@@ -62,10 +62,8 @@ export default function SelectPhoto({ navigation }: Props) {
   };
 
   const getPermissions = async () => {
-    const {
-      accessPrivileges,
-      canAskAgain,
-    } = await MediaLibrary.getPermissionsAsync();
+    const { accessPrivileges, canAskAgain } =
+      await MediaLibrary.getPermissionsAsync();
     if (accessPrivileges === "none" && canAskAgain) {
       const { accessPrivileges } = await MediaLibrary.requestPermissionsAsync();
       if (accessPrivileges !== "none") {
@@ -83,7 +81,9 @@ export default function SelectPhoto({ navigation }: Props) {
   }, []);
 
   const HeaderRight = () => (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("UploadPhoto", { file: chosenPhoto })}
+    >
       <HeaderRightText>Next</HeaderRightText>
     </TouchableOpacity>
   );
@@ -92,7 +92,7 @@ export default function SelectPhoto({ navigation }: Props) {
     navigation.setOptions({
       headerRight: HeaderRight,
     });
-  }, []);
+  }, [chosenPhoto]);
 
   const choosePhoto = (uri: string) => {
     setChosenPhoto(uri);

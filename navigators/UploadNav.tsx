@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 
 export type UploadStackParamList = {
   SelectPhoto: undefined;
+  UploadPhoto: { file: string };
 };
 
 const UploadNav: React.FC = () => {
