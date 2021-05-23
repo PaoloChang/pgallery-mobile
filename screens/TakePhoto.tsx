@@ -4,7 +4,7 @@ import { Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/core";
+import { useIsFocused, useNavigation } from "@react-navigation/core";
 import * as MediaLibrary from "expo-media-library";
 
 const Container = styled.View`
@@ -43,6 +43,7 @@ const BottonsContainer = styled.View`
 
 const TakePhoto: React.FC = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const cameraRef = useRef() as RefObject<Camera>;
   const [takenPhoto, setTakenPhoto] = useState("");
   const [cameraReady, setCameraReady] = useState(false);
@@ -110,12 +111,15 @@ const TakePhoto: React.FC = () => {
       // save a new photo to MediaLibrary
       await MediaLibrary.saveToLibraryAsync(takenPhoto);
     }
+    navigation.navigate("UploadPhoto", {
+      file: takenPhoto,
+    });
     console.log("Will upload", takenPhoto);
   };
 
   return (
     <Container>
-      <StatusBar hidden={true} />
+      {isFocused ? <StatusBar hidden={true} /> : null}
       {takenPhoto === "" ? (
         <Camera
           ref={cameraRef}
