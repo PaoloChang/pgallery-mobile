@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 const Stack = createStackNavigator();
 
 export type LoggedInStackParamList = {
+  Tabs: undefined;
   UploadPhoto: { file: string };
 };
 
