@@ -4,9 +4,12 @@ import {
   InMemoryCache,
   makeVar,
 } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CachePersistor } from "apollo3-cache-persist";
+import { createUploadLink } from "apollo-upload-client";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 export const isLoggedInVar = makeVar<boolean>(false);
 export const tokenVar = makeVar<string | null>(null);
@@ -26,7 +29,11 @@ export const logOutUser = async () => {
 };
 
 const httpLink = createHttpLink({
-  uri: `https://wonderful-parrot-50.loca.lt/graphql`,
+  uri: `https://pretty-mayfly-64.loca.lt/graphql`,
+});
+
+const uploadHttpLink = createUploadLink({
+  uri: `https://pretty-mayfly-64.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -38,23 +45,34 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const onErrorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log(`GraphQL Error: ${JSON.stringify(graphQLErrors)}`);
+  }
+  if (networkError) {
+    console.log(`Network Error: ${JSON.stringify(networkError)}`);
+  }
+});
+
 export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        seeFeed: {
-          keyArgs: false,
-          merge(existing = [], incoming = []) {
-            return [...existing, ...incoming];
-          },
-        },
+        seeFeed: offsetLimitPagination(),
+        // TODO: fix below (didn't load new photo after upload)
+        // {
+        //   keyArgs: false,
+        //   merge(existing = [], incoming = []) {
+        //     return [...existing, ...incoming];
+        //   },
+        // },
       },
     },
   },
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(onErrorLink).concat(uploadHttpLink),
   cache,
 });
 
