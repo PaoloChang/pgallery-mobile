@@ -1,3 +1,4 @@
+import { SERVER_URI } from "@env";
 import {
   ApolloClient,
   createHttpLink,
@@ -28,12 +29,14 @@ export const logOutUser = async () => {
   tokenVar(null);
 };
 
+const URL = process.env.URL;
+
 const httpLink = createHttpLink({
-  uri: `https://pretty-mayfly-64.loca.lt/graphql`,
+  uri: `${SERVER_URI}/graphql`,
 });
 
 const uploadHttpLink = createUploadLink({
-  uri: `https://pretty-mayfly-64.loca.lt/graphql`,
+  uri: `https://unlucky-rattlesnake-64.loca.lt/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {

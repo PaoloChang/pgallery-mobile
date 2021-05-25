@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import ScreenLayout from "../components/ScreenLayout";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { SharedStackParamList } from "../navigators/SharedStackNav";
 import { gql, useQuery } from "@apollo/client";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
-import { FlatList } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import ScreenLayout from "../components/ScreenLayout";
 import Post from "../components/Post";
 
 const FEED_QUERY = gql`
@@ -49,13 +52,35 @@ interface ISeeFeed {
   seeFeed: IPhoto[];
 }
 
-const Feed = ({ navigation }: any) => {
+type FeedScreenNavigationProp = StackNavigationProp<
+  SharedStackParamList,
+  "Feed"
+>;
+
+type Props = {
+  navigation: FeedScreenNavigationProp;
+};
+
+const Feed: React.FC<Props> = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery<ISeeFeed>(FEED_QUERY, {
     variables: {
       offset: 0,
     },
   });
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ marginRight: 10 }}
+          onPress={() => navigation.navigate("Messages")}
+        >
+          <Ionicons name="paper-plane" size={24} color="white" />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const refresh = async () => {
     setRefreshing(true);

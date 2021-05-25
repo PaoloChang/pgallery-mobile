@@ -13,12 +13,14 @@ import Comments from "../screens/Comments";
 const Stack = createStackNavigator();
 
 export type SharedStackParamList = {
+  Feed: undefined;
   Search: undefined;
   Gallery: { id: number; username: string };
   Photo: { photoId: number };
   Likes: { photoId: number };
   Comments: { photoId: number };
   Profile: undefined;
+  Messages: undefined;
 };
 
 interface ISharedStackNav {
