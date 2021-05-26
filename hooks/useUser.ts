@@ -16,6 +16,7 @@ export const SEE_ME_QUERY = gql`
 
 interface IUser {
   seeMe: {
+    id: number;
     username: string;
     avatar: string;
   };
