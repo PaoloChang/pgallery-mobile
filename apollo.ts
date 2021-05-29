@@ -4,13 +4,18 @@ import {
   createHttpLink,
   InMemoryCache,
   makeVar,
+  split,
 } from "@apollo/client";
+import { WebSocketLink } from "@apollo/client/link/ws";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CachePersistor } from "apollo3-cache-persist";
 import { createUploadLink } from "apollo-upload-client";
-import { offsetLimitPagination } from "@apollo/client/utilities";
+import {
+  getMainDefinition,
+  offsetLimitPagination,
+} from "@apollo/client/utilities";
 
 export const isLoggedInVar = makeVar<boolean>(false);
 export const tokenVar = makeVar<string | null>(null);
@@ -32,11 +37,21 @@ export const logOutUser = async () => {
 const URL = process.env.URL;
 
 const httpLink = createHttpLink({
-  uri: `${SERVER_URI}/graphql`,
+  uri: `ws://localhost:4000/graphql`,
 });
 
 const uploadHttpLink = createUploadLink({
-  uri: `https://unlucky-rattlesnake-64.loca.lt/graphql`,
+  uri: `https://popular-mule-50.loca.lt/graphql`,
+});
+
+const wsLink = new WebSocketLink({
+  uri: "ws://localhost:4000/subscriptions",
+  options: {
+    reconnect: true,
+    connectionParams: () => ({
+      token: tokenVar(),
+    }),
+  },
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -74,8 +89,22 @@ export const cache = new InMemoryCache({
   },
 });
 
+const httpLinks = authLink.concat(onErrorLink).concat(uploadHttpLink);
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLinks
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(onErrorLink).concat(uploadHttpLink),
+  link: splitLink,
   cache,
 });
 
