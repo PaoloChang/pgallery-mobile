@@ -42,6 +42,7 @@ interface ISeePhoto {
     image: string;
     isLiked: boolean;
     likes: number;
+    commentNumber: number;
   };
 }
 // hashtags: {

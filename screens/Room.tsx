@@ -71,6 +71,21 @@ const ROOM_QUERY = gql`
   }
 `;
 
+const ROOM_UPDATES = gql`
+  subscription roomUpdates($id: Int!) {
+    roomUpdates(id: $id) {
+      id
+      payload
+      user {
+        avatar
+        username
+      }
+      read
+      isMine
+    }
+  }
+`;
+
 const SEND_MESSAGE_MUTATION = gql`
   mutation sendMessage($payload: String!, $roomId: Int, $userId: Int) {
     sendMessage(payload: $payload, roomId: $roomId, userId: $userId) {
@@ -111,7 +126,7 @@ type Props = {
 
 const Room: React.FC<Props> = ({ navigation, route }) => {
   const { register, handleSubmit, watch, setValue, getValues } = useForm();
-  const { data, loading } = useQuery<ISeeRoom>(ROOM_QUERY, {
+  const { data, loading, subscribeToMore } = useQuery<ISeeRoom>(ROOM_QUERY, {
     variables: { id: route.params.id },
   });
   const { data: userData } = useUser();
@@ -137,26 +152,26 @@ const Room: React.FC<Props> = ({ navigation, route }) => {
             read: true,
             isMine: true,
           };
-          // const messageFragment = cache.writeFragment({
-          //   fragment: gql`
-          //     fragment NewMessage on Message {
-          //       id
-          //       payload
-          //       user {
-          //         avatar
-          //         username
-          //       }
-          //       read
-          //       isMine
-          //     }
-          //   `,
-          //   data: messageObj,
-          // });
+          const messageFragment = cache.writeFragment({
+            fragment: gql`
+              fragment NewMessage on Message {
+                id
+                payload
+                user {
+                  avatar
+                  username
+                }
+                read
+                isMine
+              }
+            `,
+            data: newMessage,
+          });
           cache.modify({
             id: `Room:${route.params.id}`,
             fields: {
               messages(prev) {
-                return [...prev, newMessage];
+                return [...prev, messageFragment];
               },
             },
           });
@@ -168,6 +183,18 @@ const Room: React.FC<Props> = ({ navigation, route }) => {
       onError: (err) => console.log(`Error: ${err}`),
     }
   );
+
+  useEffect(() => {
+    if (data?.seeRoom) {
+      subscribeToMore({
+        document: ROOM_UPDATES,
+        variables: {
+          id: route.params.id,
+        },
+        onError: (e) => console.log(e),
+      });
+    }
+  });
 
   useEffect(() => {
     navigation.setOptions({
