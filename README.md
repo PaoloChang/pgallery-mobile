@@ -1,4 +1,4 @@
-# pgallery-native
+# pgallery-mobile
 
 ## UI
 
